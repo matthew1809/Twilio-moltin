@@ -35,4 +35,4 @@ You can create a moltin webhook like so:
 
 When a moltin order is created, the webhook will fire to this app, which will grab the payload, go get the associated order and customer, and send the customer and sms with their order details.
 
-![](http://gph.is/2bqKL0r)
+![](https://media.giphy.com/media/3o7TKy1qgGdbbMalcQ/giphy.gif)
