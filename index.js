@@ -43,7 +43,7 @@ app.post('/orders', jsonParser, function (req, res) {
 	  client.messages.create({ 
 		    to: customer.data.phone_number, 
 		    from: "+442071839811",
-		    body: "Hey " + order.data.customer.name + "! Thanks for your order. The total came to " + order.data.meta.display_price.with_tax.formatted 
+		    body: "Hey " + order.data.customer.name + "! Thanks for your order. The total came to " + order.data.meta.display_price.with_tax.formatted + ". For future reference, your order ID is " + order.data.id 
 		}, function(err, message) { 
 		    console.log(message.sid);
 		});	
