@@ -1,3 +1,4 @@
 gitignore
 localStorage
 node_modules
+env
