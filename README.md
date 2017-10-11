@@ -20,6 +20,7 @@ You can create a moltin webhook like so:
     "name": "twilio",
     "integration_type": "webhook"
   }
-}'```
+}'
+```
 
 When a moltin order is created, the webhook will fire to this app, which will grab the payload, go get the associated order and customer, and send the customer and sms with their order details.
