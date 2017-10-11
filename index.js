@@ -32,33 +32,39 @@ app.post('/orders', jsonParser, function (req, res) {
   // pull the order ID from the body payload
   let order_id = pbody.data.relationships.order.data.id;
 
-  // get the moltin order associated with the webhook
-  Moltin.Orders.Get(order_id).then((order) => {
+  if(pbody.data.status === 'complete' && pbody.data['transaction-type'] === 'purchase') {
 
-  Moltin.Customers.Get(order.data.relationships.customer.data.id).then((customer) => {
+	  // get the moltin order associated with the webhook
+	  Moltin.Orders.Get(order_id).then((order) => {
 
-  // create the twilio sms and use the customer name, country and order value from the moltin order
-  client.messages.create({ 
-	    to: customer.data.phone_number, 
-	    from: "+442071839811",
-	    body: "Hey " + order.data.customer.name + "! Thanks for your order. The total came to " + order.data.meta.display_price.with_tax.formatted 
-	}, function(err, message) { 
-	    console.log(message.sid);
-	});	
-  }).catch((e) => {
-  	console.log(e);
-  });
+	  Moltin.Customers.Get(order.data.relationships.customer.data.id).then((customer) => {
 
-  // get the order items associated with the moltin order
-  	// Moltin.Orders.Items(order_id).then((items) => {
-  	// 	items.data.length
-  	// }).catch((e) => {
-  	// 	 console.log(e);
-  	// })
+	  // create the twilio sms and use the customer name, country and order value from the moltin order
+	  client.messages.create({ 
+		    to: customer.data.phone_number, 
+		    from: "+442071839811",
+		    body: "Hey " + order.data.customer.name + "! Thanks for your order. The total came to " + order.data.meta.display_price.with_tax.formatted 
+		}, function(err, message) { 
+		    console.log(message.sid);
+		});	
+	  }).catch((e) => {
+	  	console.log(e);
+	  });
 
-  }).catch((e) => {
-  	console.log(e)
-  });
+	  // get the order items associated with the moltin order
+	  	// Moltin.Orders.Items(order_id).then((items) => {
+	  	// 	items.data.length
+	  	// }).catch((e) => {
+	  	// 	 console.log(e);
+	  	// })
+
+	  }).catch((e) => {
+	  	console.log(e)
+	  });
+
+	} else {
+		res.send('Not a completed purchase');
+	}
 	
   // send a response to the client	
   res.send('A OK!');
