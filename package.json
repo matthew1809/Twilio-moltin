@@ -13,6 +13,7 @@
     "@moltin/sdk": "^2.8.0",
     "body-parser": "^1.18.2",
     "dotenv": "^4.0.0",
+    "express": "^4.16.2",
     "twilio": "^3.8.0"
   }
 }
