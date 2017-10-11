@@ -8,7 +8,7 @@ const authToken = process.env.AUTH_TOKEN;
 // require the Twilio module and create a REST client 
 const client = require('twilio')(accountSid, authToken); 
 
-// require express and creare an express app
+// require Express and creare an express app
 const express = require('express')
 const app = express()
 
@@ -16,7 +16,7 @@ const app = express()
 const bodyParser = require('body-parser'); 
 const jsonParser = bodyParser.json();
 
-//required and initialise the moltin SDK
+//require and initialise the moltin SDK
 const MoltinGateway = require('@moltin/sdk').gateway;
 const Moltin = MoltinGateway({
   client_id: 'j6hSilXRQfxKohTndUuVrErLcSJWP15P347L6Im0M4',
@@ -32,6 +32,7 @@ app.post('/orders', jsonParser, function (req, res) {
   // pull the order ID from the body payload
   let order_id = pbody.data.relationships.order.data.id;
 
+  // check that the webhook is indicating a completed transaction, rather than a refund
   if(pbody.data.status === 'complete' && pbody.data['transaction-type'] === 'purchase') {
 
 	  // get the moltin order associated with the webhook
@@ -63,6 +64,7 @@ app.post('/orders', jsonParser, function (req, res) {
 	  });
 
 	} else {
+		// send a response to the client	
 		res.send('Not a completed purchase');
 	}
 	
@@ -70,13 +72,15 @@ app.post('/orders', jsonParser, function (req, res) {
   res.send('A OK!');
 });
 
+// testing route
 app.get('/test', function (req, res) {
 	res.send("app functioning successfully");
 });
 
+// dynamic port so Heroku can set it
 var port = process.env.PORT || 5000;
 
-//open the app on port 5000
+//expose the app on the dynamic port
 app.listen(port, function () {
   console.log('Twilio - Moltin app listening on port ' + port);
 });
