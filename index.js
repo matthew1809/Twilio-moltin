@@ -64,6 +64,10 @@ app.post('/orders', jsonParser, function (req, res) {
   res.send('A OK!');
 });
 
+app.get('/test', function (req, res) {
+	res.send("app functioning successfully");
+});
+
 var port = process.env.PORT || 5000;
 
 //open the app on port 5000
