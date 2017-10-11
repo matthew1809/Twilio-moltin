@@ -8,5 +8,17 @@
     "twilio",
     "ecommerce"
   ],
+   "env": {
+    "client_secret": {
+      "description": "The client_secret is the unique secret associated with your store. You'll find this on the welcome screen of your moltin Dashboard.",
+      "value": ""
+    },
+    "accountSid": {
+      "value": ""
+    },
+    "authToken": {
+      "value": ""
+    }
+  },
   "success_url": "/"
 }
