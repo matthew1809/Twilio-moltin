@@ -2,8 +2,8 @@
 require('dotenv').config();
 
 // Twilio Credentials 
-const accountSid = process.env.accountSid; 
-const authToken = process.env.authToken; 
+const accountSid = process.env.ACCOUNT_SID; 
+const authToken = process.env.AUTH_TOKEN; 
 
 // require the Twilio module and create a REST client 
 const client = require('twilio')(accountSid, authToken); 

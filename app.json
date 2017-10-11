@@ -13,11 +13,11 @@
       "description": "The client_secret is the unique secret associated with your store. You'll find this on the welcome screen of your moltin Dashboard.",
       "value": ""
     },
-    "accountSid": {
+    "ACCOUNT_SID": {
       "description": "Twilio account sid",
       "value": ""
     },
-    "authToken": {
+    "AUTH_TOKEN": {
       "description": "Twilio auth token",
       "value": ""
     }
