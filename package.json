@@ -12,6 +12,7 @@
   "dependencies": {
     "@moltin/sdk": "^2.8.0",
     "body-parser": "^1.18.2",
-    "dotenv": "^4.0.0"
+    "dotenv": "^4.0.0",
+    "twilio": "^3.8.0"
   }
 }

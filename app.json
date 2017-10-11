@@ -14,9 +14,11 @@
       "value": ""
     },
     "accountSid": {
+      "description": "Twilio account sid",
       "value": ""
     },
     "authToken": {
+      "description": "Twilio auth token",
       "value": ""
     }
   },

@@ -2,3 +2,4 @@ gitignore
 localStorage
 node_modules
 .env
+npm-debug.log
