@@ -1,0 +1,12 @@
+{
+  "name": "Twilio moltin integration server",
+  "description": "express app that sends a twilio sms to a customer when they make a moltin order",
+  "logo": "https://www.moltin.com/img/icons/favicons/apple-touch-icon.png",
+  "repository": "https://github.com/matthew1809/Twilio-moltin",
+  "keywords": [
+    "moltin",
+    "twilio",
+    "ecommerce"
+  ],
+  "success_url": "/"
+}
