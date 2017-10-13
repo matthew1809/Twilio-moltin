@@ -16,6 +16,7 @@ const app = express()
 // require and use the middleware parser for express
 const bodyParser = require('body-parser'); 
 const jsonParser = bodyParser.json();
+const urlParser = bodyParser.urlencoded();
 
 //require and initialise the moltin SDK
 const MoltinGateway = require('@moltin/sdk').gateway;
@@ -27,6 +28,7 @@ const Moltin = MoltinGateway({
 
 // parse application/json
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 
 // runs when the '/orders' endpoint is POSTed to
 app.post('/orders', jsonParser, function (req, res) {
@@ -77,9 +79,9 @@ app.post('/orders', jsonParser, function (req, res) {
   res.send('A OK!');
 });
 
-app.post('/sms', function(req, res) {
+app.post('/sms', urlParser, function(req, res) {
  
-  console.log(JSON.stringify(req.body));
+  console.log(req.body);
 
   // const twiml = new MessagingResponse();
 
