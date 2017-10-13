@@ -73,7 +73,7 @@ app.post('/orders', jsonParser, function (req, res) {
   res.send('A OK!');
 });
 
-app.post('/sms', jsonParser, function(req, res) => {
+app.post('/sms', jsonParser, function(req, res) {
  
   console.log(req.body);
 
