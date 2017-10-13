@@ -6,7 +6,8 @@ const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTH_TOKEN; 
 
 // require the Twilio module and create a REST client 
-const client = require('twilio')(accountSid, authToken); 
+const client = require('twilio')(accountSid, authToken);
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
 // require Express and creare an express app
 const express = require('express')
@@ -70,6 +71,15 @@ app.post('/orders', jsonParser, function (req, res) {
 	
   // send a response to the client	
   res.send('A OK!');
+});
+
+app.post('/sms', (req, res) => {
+  const twiml = new MessagingResponse();
+
+  twiml.message('The Robots are coming! Head for the hills!');
+
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
 });
 
 // testing route
