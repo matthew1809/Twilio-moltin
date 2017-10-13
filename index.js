@@ -24,6 +24,10 @@ const Moltin = MoltinGateway({
   client_secret: process.env.client_secret,
 });
 
+
+// parse application/json
+app.use(bodyParser.json());
+
 // runs when the '/orders' endpoint is POSTed to
 app.post('/orders', jsonParser, function (req, res) {
 
@@ -73,9 +77,9 @@ app.post('/orders', jsonParser, function (req, res) {
   res.send('A OK!');
 });
 
-app.post('/sms', jsonParser, function(req, res) {
+app.post('/sms', function(req, res) {
  
-  console.log(req.body.Body);
+  console.log(JSON.stringify(req.body));
 
   // const twiml = new MessagingResponse();
 
