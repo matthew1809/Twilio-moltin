@@ -73,9 +73,9 @@ app.post('/orders', jsonParser, function (req, res) {
   res.send('A OK!');
 });
 
-app.post('/sms', (req, res) => {
+app.post('/sms', jsonParser, function(req, res) => {
  
-  console.log(JSON.stringify(req.body));
+  console.log(req.body);
 
   // const twiml = new MessagingResponse();
 
