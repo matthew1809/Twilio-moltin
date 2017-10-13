@@ -18,13 +18,8 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const urlParser = bodyParser.urlencoded();
 
-//require and initialise the moltin SDK
-const MoltinGateway = require('@moltin/sdk').gateway;
-const Moltin = MoltinGateway({
-  client_id: 'j6hSilXRQfxKohTndUuVrErLcSJWP15P347L6Im0M4',
-  client_secret: process.env.client_secret,
-});
-
+// require our moltin utils
+const moltin = require("./moltin.js");
 
 // parse application/json
 app.use(bodyParser.json());
@@ -43,9 +38,9 @@ app.post('/orders', jsonParser, function (req, res) {
   if(pbody.data.status === 'complete' && pbody.data['transaction-type'] === 'purchase') {
 
 	  // get the moltin order associated with the webhook
-	  Moltin.Orders.Get(order_id).then((order) => {
+	  moltin.getOrder(order_id).then((order) => {
 
-	  Moltin.Customers.Get(order.data.relationships.customer.data.id).then((customer) => {
+	  moltin.getCustomer(order.data.relationships.customer.data.id).then((customer) => {
 
 	  // create the twilio sms and use the customer name, country and order value from the moltin order
 	  client.messages.create({ 
@@ -80,15 +75,19 @@ app.post('/orders', jsonParser, function (req, res) {
 });
 
 app.post('/sms', urlParser, function(req, res) {
- 
-  console.log(req.body);
+   
+  const twiml = new MessagingResponse();
 
-  // const twiml = new MessagingResponse();
+  console.log(req.body.Body);
 
-  // twiml.message('The Robots are coming! Head for the hills!');
+  if(req.body.Body === "status") {
+  	twiml.message('Order status requested');
+  } else {
+  	twiml.message('status text not matched');
+  }
 
-  // res.writeHead(200, {'Content-Type': 'text/xml'});
-  // res.end(twiml.toString());
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
 });
 
 // testing route
