@@ -83,17 +83,17 @@ app.post('/sms', urlParser, function(req, res) {
   if(req.body.Body === "status") {
 
   	moltin.getOrder('bff00047-a1be-4336-9eda-611da99f8b64').then((order) => {
-  		console.log(order)
+  		console.log(order);
+  		 twiml.message('The order status for your most recent order is ' + order.data.status + '. The payment status is ' + order.data.shipping + '.');
   	});
-  	//twiml.message('Order status requested');
 
 
   } else {
-  	//twiml.message('status text not matched');
-  }
+  	twiml.message('status text not matched');
+  };
 
-  // res.writeHead(200, {'Content-Type': 'text/xml'});
-  // res.end(twiml.toString());
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
 });
 
 // testing route
