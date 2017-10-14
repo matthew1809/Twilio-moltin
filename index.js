@@ -64,21 +64,17 @@ app.post('/sms', urlParser, function(req, res) {
   const twiml = new MessagingResponse();
 
   console.log(req.body.Body);
+  var res = req.body.Body.split(" ");
+  console.log(res);
 
-  if(req.body.Body === "status") {
+  // 	moltin.getOrder(id).then((order) => {
+  // 		twiml.message('The order status for your most recent order is ' + order.data.status + '. The payment status is ' + order.data.shipping + '.');
+  // 	}).catch((e) => {
+  // 		console.log(e);
+  // 	});
 
-  	moltin.getOrder('bff00047-a1be-4336-9eda-611da99f8b64').then((order) => {
-  		twiml.message('The order status for your most recent order is ' + order.data.status + '. The payment status is ' + order.data.shipping + '.');
-  	}).catch((e) => {
-  		console.log(e);
-  	})
-
-  } else {
-  	twiml.message('status text not matched');
-  };
-
-  res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
+  // res.writeHead(200, {'Content-Type': 'text/xml'});
+  // res.end(twiml.toString());
 });
 
 // testing route
