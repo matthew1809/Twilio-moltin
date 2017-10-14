@@ -64,12 +64,12 @@ app.post('/orders', jsonParser, function (req, res) {
 app.post('/sms', urlParser, function(req, res) {
 
   console.log(req.body.Body);
-  var res = req.body.Body.split(" ");
-  console.log(res[0]);
-  console.log(res[1]);
+  var splitreq = req.body.Body.split(" ");
+  console.log(splitreq[0]);
+  console.log(splitreq[1]);
 
-  if(res[0] === "status") {
-  	  	moltin.getOrder(res[1]).then((order) => {
+  if(splitreq[0] === "status") {
+  	  	moltin.getOrder(splitreq[1]).then((order) => {
 
   		twiml.message('The order status for your most recent order is ' + order.data.status + '. The payment status is ' + order.data.shipping + '.');
 
