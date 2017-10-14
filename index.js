@@ -60,20 +60,23 @@ app.post('/orders', jsonParser, function (req, res) {
 });
 
 app.post('/sms', urlParser, function(req, res) {
-   
 
   console.log(req.body.Body);
   var res = req.body.Body.split(" ");
-  console.log(res);
+  console.log(res[0]);
+  console.log(res[1]);
 
-  // 	moltin.getOrder(id).then((order) => {
-  // 		twiml.message('The order status for your most recent order is ' + order.data.status + '. The payment status is ' + order.data.shipping + '.');
-  // 	}).catch((e) => {
-  // 		console.log(e);
-  // 	});
+  if(res[0] === "status") {
+  	  	moltin.getOrder(res[1]).then((order) => {
+  		return twilio.respond(order);
+  	}).catch((e) => {
+  		console.log(e);
+  	});
 
-  // res.writeHead(200, {'Content-Type': 'text/xml'});
-  // res.end(twiml.toString());
+  } else {
+  	console.log("no status requested");
+  }
+
 });
 
 // testing route
