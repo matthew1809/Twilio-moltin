@@ -19,7 +19,7 @@ exports.createOrderMessage = function(to, name, total, id) {
 		{
 			to: to, 
 			from: "+442071839811",
-			body: "Hey " + name + "! Thanks for your order. The total came to " + total + ". For future reference, your order ID is " + id 
+			body: "Hey " + name + "! Thanks for your order. The total came to " + total + ". For future reference, your order ID is " + id + ". You can get a status update by texting "status" followed by a space, then your order id."
 		},
 		function(err, message) { 
 			 console.log(message.sid);

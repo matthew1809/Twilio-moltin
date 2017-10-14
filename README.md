@@ -6,7 +6,7 @@
 
 [Get Moltin API keys](https://dashboard.moltin.com/signup)
 
-The purpose of this project is to allow you to text your customers when they create a moltin order.
+The purpose of this project is to allow you to text your customers when they create a moltin order, and for your customers to request a status update on their order.
 
 ---
 
@@ -36,5 +36,7 @@ You can create a moltin webhook like so:
 When a moltin order is created, the webhook will fire to this app, which will grab the payload, go get the associated order and customer, and send the customer and sms with their order details.
 
 If no customer is associated with the order, it will simply log "no customer associated with this order".
+
+For the customer to request an update on their order status, they must text "status", followed by a space, followed by the moltin order ID which they would have received in the original notification.
 
 ![](https://media.giphy.com/media/3o7TKy1qgGdbbMalcQ/giphy.gif)

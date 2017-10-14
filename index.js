@@ -62,16 +62,12 @@ app.post('/orders', jsonParser, function (req, res) {
 
 app.post('/sms', urlParser, function(req, res) {
   const twiml = new MessagingResponse();
-  console.log(req.body.Body);
   var splitreq = req.body.Body.split(" ");
-  console.log(splitreq[0]);
-  console.log(splitreq[1]);
 
   if(splitreq[0] === "status") {
   	  	moltin.getOrder(splitreq[1]).then((order) => {
 
   		twiml.message('The order status for your most recent order is ' + order.data.status + '. The payment status is ' + order.data.shipping + '.');
-  		console.log("sending the response");
   		res.writeHead(200, {'Content-Type': 'text/xml'});
   		res.end(twiml.toString());
 
@@ -81,7 +77,7 @@ app.post('/sms', urlParser, function(req, res) {
 
   } else {
   	console.log("no status requested");
-  }
+  };
 
 });
 
