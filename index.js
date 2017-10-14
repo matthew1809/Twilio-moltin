@@ -1,14 +1,3 @@
-// require our env package
-require('dotenv').config();
-
-// Twilio Credentials 
-const accountSid = process.env.ACCOUNT_SID; 
-const authToken = process.env.AUTH_TOKEN; 
-
-// require the Twilio module and create a REST client 
-const client = require('twilio')(accountSid, authToken);
-const MessagingResponse = require('twilio').twiml.MessagingResponse;
-
 // require Express and creare an express app
 const express = require('express')
 const app = express()
@@ -20,6 +9,9 @@ const urlParser = bodyParser.urlencoded();
 
 // require our moltin utils
 const moltin = require("./moltin.js");
+
+// require our twilio utils
+const twilio = require("./twilio.js");
 
 // parse application/json
 app.use(bodyParser.json());
@@ -40,16 +32,10 @@ app.post('/orders', jsonParser, function (req, res) {
 	  // get the moltin order associated with the webhook
 	  moltin.getOrder(order_id).then((order) => {
 
+	  // get the moltin customer associated with the order
 	  moltin.getCustomer(order.data.relationships.customer.data.id).then((customer) => {
 
-	  // create the twilio sms and use the customer name, country and order value from the moltin order
-	  client.messages.create({ 
-		    to: customer.data.phone_number, 
-		    from: "+442071839811",
-		    body: "Hey " + order.data.customer.name + "! Thanks for your order. The total came to " + order.data.meta.display_price.with_tax.formatted + ". For future reference, your order ID is " + order.data.id 
-		}, function(err, message) { 
-		    console.log(message.sid);
-		});	
+	  	twilio.createMessage(customer.data.phone_number, order.data.customer.name, order.data.meta.display_price.with_tax.formatted, order.data.id)
 	  }).catch((e) => {
 	  	console.log(e);
 	  });

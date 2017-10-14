@@ -1,3 +1,6 @@
+// require our env package
+require('dotenv').config();
+
 var exports = module.exports = {};
 
 //require and initialise the moltin SDK
