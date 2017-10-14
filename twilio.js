@@ -12,7 +12,7 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 var exports = module.exports = {};
 
 // create a twilio sms
-var createMessage = function(to, name, total, id) => {
+var createMessage = function(to, name, total, id) {
 
 	client.messages.create(
 		{ 
@@ -23,6 +23,5 @@ var createMessage = function(to, name, total, id) => {
 		function(err, message) { 
 			 console.log(message.sid);
 			 console.log(err);
-		};
-	);
+		});
 };
