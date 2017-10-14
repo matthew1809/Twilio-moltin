@@ -13,7 +13,6 @@ const moltin = require("./moltin.js");
 // require our twilio utils
 const twilio = require("./twilio.js");
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
-const twiml = new MessagingResponse();
 
 // parse application/json
 app.use(bodyParser.json());
@@ -62,7 +61,7 @@ app.post('/orders', jsonParser, function (req, res) {
 });
 
 app.post('/sms', urlParser, function(req, res) {
-
+  const twiml = new MessagingResponse();
   console.log(req.body.Body);
   var splitreq = req.body.Body.split(" ");
   console.log(splitreq[0]);
@@ -72,13 +71,13 @@ app.post('/sms', urlParser, function(req, res) {
   	  	moltin.getOrder(splitreq[1]).then((order) => {
 
   		twiml.message('The order status for your most recent order is ' + order.data.status + '. The payment status is ' + order.data.shipping + '.');
+  		console.log("sending the response");
+  		res.writeHead(200, {'Content-Type': 'text/xml'});
+  		res.end(twiml.toString());
 
   	}).catch((e) => {
   		console.log(e);
   	});
-
-  	res.writeHead(200, {'Content-Type': 'text/xml'});
-  	res.end(twiml.toString());
 
   } else {
   	console.log("no status requested");
