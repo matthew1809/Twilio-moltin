@@ -20,6 +20,10 @@
     "AUTH_TOKEN": {
       "description": "Twilio auth token",
       "value": ""
+    },
+    "FROM_NUMBER": {
+      "description": "the Twilio phone number that will send the sms notifications and then receive the order update requests",
+      "value": ""
     }
   },
   "success_url": "/test"

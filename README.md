@@ -6,11 +6,19 @@
 
 [Get Moltin API keys](https://dashboard.moltin.com/signup)
 
-The purpose of this project is to allow you to text your customers when they create a moltin order, and for your customers to request a status update on their order.
+The purpose of this project is to allow your customers to:
+
+1. Automatically receive an sms notification when they create and successfully pay for a moltin order
+
+2. Request a status update on their moltin order by texting "status", followed by a space, followed by the order ID
 
 ---
 
-In order to use this repo, you'll need to deploy it, and then create a moltin webhook pointing to the deployed url with /orders on the end i.e. `http://5e082d80.ngrok.io/orders`.
+In order to use this repo, you'll need to follow three steps:
+
+1. Deploy the application to Heroku, providing your Twilio credentials, your twilio from number and your moltin client secret.
+
+2. This step will allow you to send the order notifications, it tells moltin to ping our app when an order is paid for. You should create a moltin webhook pointing to the deployed url with /orders on the end i.e. `http://5e082d80.ngrok.io/orders`.
 
 You can create a moltin webhook like so:
 
@@ -37,6 +45,6 @@ When a moltin order is created, the webhook will fire to this app, which will gr
 
 If no customer is associated with the order, it will simply log "no customer associated with this order".
 
-For the customer to request an update on their order status, they must text "status", followed by a space, followed by the moltin order ID which they would have received in the original notification. You will also need to set up the moltin phone number to respond to an incoming sms with the app url followed by `/sms`.
+3. This step will allow you to receive order update requests via sms, and respond to them with an up to date order status. You should point your chosen Twilio number to the deployed url + `/sms` for when the number receives an sms.
 
 ![](https://media.giphy.com/media/3o7TKy1qgGdbbMalcQ/giphy.gif)
