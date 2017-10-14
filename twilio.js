@@ -8,6 +8,7 @@ const authToken = process.env.AUTH_TOKEN;
 // require the Twilio module and create a REST client 
 const client = require('twilio')(accountSid, authToken);
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
+const twiml = new MessagingResponse();
 
 var exports = module.exports = {};
 
