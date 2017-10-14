@@ -28,7 +28,7 @@ exports.createOrderMessage = function(to, name, total, id) {
 };
 
 
-exports.respond = function(order) {
+exports.respond = function(order, res) {
 
  twiml.message('The order status for your most recent order is ' + order.data.status + '. The payment status is ' + order.data.shipping + '.');
 
