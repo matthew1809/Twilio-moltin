@@ -15,11 +15,11 @@ var exports = module.exports = {};
 exports.createMessage = function(to, name, total, id) {
 
 	client.messages.create(
-		{ 
+		{
 			to: to, 
 			from: "+442071839811",
 			body: "Hey " + name + "! Thanks for your order. The total came to " + total + ". For future reference, your order ID is " + id 
-		}, 
+		},
 		function(err, message) { 
 			 console.log(message.sid);
 			 console.log(err);

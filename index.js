@@ -32,20 +32,20 @@ app.post('/orders', jsonParser, function (req, res) {
 	  // get the moltin order associated with the webhook
 	  moltin.getOrder(order_id).then((order) => {
 
-	  // get the moltin customer associated with the order
-	  moltin.getCustomer(order.data.relationships.customer.data.id).then((customer) => {
+	  	try {
 
-	  	twilio.createMessage(customer.data.phone_number, order.data.customer.name, order.data.meta.display_price.with_tax.formatted, order.data.id)
-	  }).catch((e) => {
-	  	console.log(e);
-	  });
+	  		// get the moltin customer associated with the order
+			  moltin.getCustomer(order.data.relationships.customer.data.id).then((customer) => {
 
-	  // get the order items associated with the moltin order
-	  	// Moltin.Orders.Items(order_id).then((items) => {
-	  	// 	items.data.length
-	  	// }).catch((e) => {
-	  	// 	 console.log(e);
-	  	// })
+			  	return twilio.createMessage(customer.data.phone_number, order.data.customer.name, order.data.meta.display_price.with_tax.formatted, order.data.id)
+
+			  }).catch((e) => {
+			  	console.log(e);
+			  });
+
+	  	} catch(e) {
+			console.log("no customer associated with this order");	  		
+	  	};
 
 	  }).catch((e) => {
 	  	console.log(e)
