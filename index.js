@@ -36,7 +36,7 @@ app.post('/orders', jsonParser, function (req, res) {
 	  		// get the moltin customer associated with the order
 			  moltin.getCustomer(order.data.relationships.customer.data.id).then((customer) => {
 
-			  	return twilio.createMessage(customer.data.phone_number, order.data.customer.name, order.data.meta.display_price.with_tax.formatted, order.data.id)
+			  	return twilio.createOrderMessage(customer.data.phone_number, order.data.customer.name, order.data.meta.display_price.with_tax.formatted, order.data.id)
 
 			  }).catch((e) => {
 			  	console.log(e);
