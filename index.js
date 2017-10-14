@@ -73,11 +73,12 @@ app.post('/sms', urlParser, function(req, res) {
 
   		twiml.message('The order status for your most recent order is ' + order.data.status + '. The payment status is ' + order.data.shipping + '.');
 
-  		res.writeHead(200, {'Content-Type': 'text/xml'});
-  		res.end(twiml.toString());
   	}).catch((e) => {
   		console.log(e);
   	});
+
+  	res.writeHead(200, {'Content-Type': 'text/xml'});
+  	res.end(twiml.toString());
 
   } else {
   	console.log("no status requested");
