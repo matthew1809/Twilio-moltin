@@ -25,3 +25,12 @@ exports.createOrderMessage = function(to, name, total, id) {
 			 console.log(err);
 		});
 };
+
+
+exports.respond = function(order) {
+
+	twiml.message('The order status for your most recent order is ' + order.data.status + '. The payment status is ' + order.data.shipping + '.');
+
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
+};
