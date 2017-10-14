@@ -61,7 +61,6 @@ app.post('/orders', jsonParser, function (req, res) {
 
 app.post('/sms', urlParser, function(req, res) {
    
-  const twiml = new MessagingResponse();
 
   console.log(req.body.Body);
   var res = req.body.Body.split(" ");
