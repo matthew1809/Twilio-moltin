@@ -37,6 +37,6 @@ When a moltin order is created, the webhook will fire to this app, which will gr
 
 If no customer is associated with the order, it will simply log "no customer associated with this order".
 
-For the customer to request an update on their order status, they must text "status", followed by a space, followed by the moltin order ID which they would have received in the original notification.
+For the customer to request an update on their order status, they must text "status", followed by a space, followed by the moltin order ID which they would have received in the original notification. You will also need to set up the moltin phone number to respond to an incoming sms with the app url followed by `/sms`.
 
 ![](https://media.giphy.com/media/3o7TKy1qgGdbbMalcQ/giphy.gif)

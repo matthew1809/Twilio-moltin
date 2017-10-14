@@ -10,10 +10,12 @@ const Moltin = MoltinGateway({
   client_secret: process.env.client_secret,
 });
 
+// function to get a moltin order given an order ID
 exports.getOrder = function(ID) {
 	return Moltin.Orders.Get(ID);
 };
 
+// function to get a moltin customer given an customer ID
 exports.getCustomer = function(ID) {
 	return Moltin.Customers.Get(ID);
 }
