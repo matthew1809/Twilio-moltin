@@ -68,7 +68,8 @@ app.post('/sms', urlParser, function(req, res) {
 
   if(res[0] === "status") {
   	  	moltin.getOrder(res[1]).then((order) => {
-  		return twilio.respond(order);
+  	  		
+  		return twilio.respond(order, res);
   	}).catch((e) => {
   		console.log(e);
   	});
