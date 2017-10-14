@@ -33,7 +33,6 @@ app.post('/orders', jsonParser, function (req, res) {
 	  moltin.getOrder(order_id).then((order) => {
 
 	  	try {
-
 	  		// get the moltin customer associated with the order
 			  moltin.getCustomer(order.data.relationships.customer.data.id).then((customer) => {
 
@@ -48,7 +47,7 @@ app.post('/orders', jsonParser, function (req, res) {
 	  	};
 
 	  }).catch((e) => {
-	  	console.log(e)
+	  	console.log(e);
 	  });
 
 	} else {
