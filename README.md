@@ -18,9 +18,7 @@ The purpose of this project is to:
 
 In order to use this repo, you'll need to follow three steps:
 
-1. Deploy the application to Heroku, providing your Twilio credentials, your twilio from number and your moltin credentials. 
-
-*You will also need to specify whether or not to enable the promotions functionality via env variable. To enable it, set the variable called `promotions_enabled` to "yes"*
+1. Deploy the application to Heroku and [set the config variables](https://devcenter.heroku.com/articles/config-vars) to those in `.env.example`, replacing the placeholders with your own variables.
 
 2. This step will allow you to send the order notifications, it tells moltin to ping our app when an order is paid for. You should create a moltin webhook pointing to the deployed url with /orders on the end i.e. `http://5e082d80.ngrok.io/orders`.
 
