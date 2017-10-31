@@ -19,3 +19,12 @@ exports.getOrder = function(ID) {
 exports.getCustomer = function(ID) {
 	return Moltin.Customers.Get(ID);
 }
+
+exports.getCustomers = function() {
+	//return Moltin.Customers.With('orders').All();
+	return Moltin.Customers.All();
+};
+
+exports.updateCustomer = function(ID, body) {
+	return Moltin.Customers.Update(ID, body);
+}

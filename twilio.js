@@ -20,7 +20,7 @@ exports.createOrderMessage = function(to, name, total, id) {
 		{
 			to: to, 
 			from: process.env.FROM_NUMBER || "+442071839811",
-			body: "Hey " + name + "! Thanks for your order. The total came to " + total + ". For future reference, your order ID is " + id + ". You can get a status update by texting "status" followed by a space, then your order id."
+			body: "Hey " + name + "! Thanks for your order. The total came to " + total + ". For future reference, your order ID is " + id + ". You can get a status update by texting status followed by a space, then your order id."
 		},
 		function(err, message) { 
 			 console.log(message.sid);
@@ -32,5 +32,21 @@ exports.createOrderMessage = function(to, name, total, id) {
 exports.respond = function(order) {
 
  return twiml.message('The order status for your most recent order is ' + order.data.status + '. The payment status is ' + order.data.shipping + '.');
+
+};
+
+exports.createPromotionMessage = function(to, name, code) {
+
+	// create our sms message using the function inputs
+	client.messages.create(
+		{
+			to: to, 
+			from: process.env.FROM_NUMBER || "+442071839811",
+			body: "Hey " + name + ", come back and get X off your next order with the promo code " + code
+		},
+		function(err, message) {
+			 console.log(message.sid);
+			 console.log(err);
+		});
 
 };
