@@ -23,10 +23,14 @@
 `promo_sent` - boolean type, not required, default `false`.
 `phone_number` - string type, not required, default `null`.
 
+2. If you are using the promotions functionality you must provide the promotion code as an env var (covered in step 3). To create a promo code, you need to create a moltin promotion, and then attach a promotion code to that promotion. The following documents will be useful to you:
 
-2. Deploy the application to Heroku and [set the config variables](https://devcenter.heroku.com/articles/config-vars) to those in `.env.example`, replacing the placeholders with your own variables.
+- [Reference for creating a promotion](https://moltin.api-docs.io/v2/promotions/create-promotion)
+- [Reference for creating a promo code](https://moltin.api-docs.io/v2/promotions/create-promotion-code)
 
-3. This step will allow you to send the order notifications, it tells moltin to ping our app when an order is paid for. You should create a moltin webhook pointing to the deployed url with /orders on the end i.e. `http://5e082d80.ngrok.io/orders`.
+3. Deploy the application to Heroku and [set the config variables](https://devcenter.heroku.com/articles/config-vars) to those in `.env.example`, replacing the placeholders with your own variables.
+
+4. This step will allow you to send the order notifications, it tells moltin to ping our app when an order is paid for. You should create a moltin webhook pointing to the deployed url with /orders on the end i.e. `http://5e082d80.ngrok.io/orders`.
 
 You can create a moltin webhook like so:
 
@@ -53,6 +57,6 @@ When a moltin order is created, the webhook will fire to this app, which will gr
 
 If no customer is associated with the order, it will simply log "no customer associated with this order".
 
-4. This step will allow you to receive order update requests via sms, and respond to them with an up to date order status. You should point your chosen Twilio number to the deployed url + `/sms` for when the number receives an sms.
+5. This step will allow you to receive order update requests via sms, and respond to them with an up to date order status. You should point your chosen Twilio number to the deployed url + `/sms` for when the number receives an sms.
 
 ![](https://media.giphy.com/media/3ohhwGpIOhPtQ5kALu/giphy.gif)

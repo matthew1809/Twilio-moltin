@@ -122,10 +122,10 @@ function checkCustomerPromotionFlag(customer) {
 		let to = customer.data.phone_number;
 
 		// return the function to send a promotion code to the customer
-		return twilio.createPromotionMessage(to, name, "MY_PROMO");
+		return twilio.createPromotionMessage(to, name, process.env.promo_code);
 
 		// TODO call the adjustCustomerPromotionFlag only if the twilio function succeeds
-		// return adjustCustomerPromotionFlag(customer, true);
+		// return adjustCustomerPromotionFlag(customer, true, );
 
 		}
 
