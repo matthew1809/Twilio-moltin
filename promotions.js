@@ -115,6 +115,9 @@ function checkCustomerPromotionFlag(customer) {
 	// if the flag on the customer account is false
 	if(customer.data.promo_sent === false) {
 
+		// just in case the customer doesn't have a phone number, we use a try catch
+		try {
+
 		let name = customer.data.name;
 		let to = customer.data.phone_number;
 
@@ -123,6 +126,14 @@ function checkCustomerPromotionFlag(customer) {
 
 		// TODO call the adjustCustomerPromotionFlag only if the twilio function succeeds
 		// return adjustCustomerPromotionFlag(customer, true);
+
+		}
+
+		// if an error is thrown during our try block
+		catch(e) {
+			return false;
+		};
+
 	}
 
 	// if the promotion has already been sent to the user

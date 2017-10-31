@@ -18,9 +18,15 @@
 
 ### Instructions
 
-1. Deploy the application to Heroku and [set the config variables](https://devcenter.heroku.com/articles/config-vars) to those in `.env.example`, replacing the placeholders with your own variables.
+1. If using this on your moltin store, you’ll need to make sure you have two flow fields created on your customers entity. If you’ve never used flows before, you can learn more in [this blog post](https://moltin.com/blog/2017/06/power-of-flows/s). The two fields should be:
 
-2. This step will allow you to send the order notifications, it tells moltin to ping our app when an order is paid for. You should create a moltin webhook pointing to the deployed url with /orders on the end i.e. `http://5e082d80.ngrok.io/orders`.
+`promo_sent` - boolean type, not required, default `false`.
+`phone_number` - string type, not required, default `null`.
+
+
+2. Deploy the application to Heroku and [set the config variables](https://devcenter.heroku.com/articles/config-vars) to those in `.env.example`, replacing the placeholders with your own variables.
+
+3. This step will allow you to send the order notifications, it tells moltin to ping our app when an order is paid for. You should create a moltin webhook pointing to the deployed url with /orders on the end i.e. `http://5e082d80.ngrok.io/orders`.
 
 You can create a moltin webhook like so:
 
@@ -47,6 +53,6 @@ When a moltin order is created, the webhook will fire to this app, which will gr
 
 If no customer is associated with the order, it will simply log "no customer associated with this order".
 
-3. This step will allow you to receive order update requests via sms, and respond to them with an up to date order status. You should point your chosen Twilio number to the deployed url + `/sms` for when the number receives an sms.
+4. This step will allow you to receive order update requests via sms, and respond to them with an up to date order status. You should point your chosen Twilio number to the deployed url + `/sms` for when the number receives an sms.
 
 ![](https://media.giphy.com/media/3ohhwGpIOhPtQ5kALu/giphy.gif)
