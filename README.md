@@ -6,9 +6,9 @@
 
 [Get Moltin API keys](https://dashboard.moltin.com/signup)
 
-The purpose of this project is to:
+### Project Purpose
 
-1. Automatically send an sms notification to your customer when they create and successfully pay for a moltin order
+1. Automatically send an sms notification to your customer when they create and successfully pay for a moltin order.
 
 2. Let customers request a status update on their moltin order by texting "status", followed by a space, followed by the order ID.
 
@@ -16,7 +16,7 @@ The purpose of this project is to:
 
 ---
 
-In order to use this repo, you'll need to follow three steps:
+### Instructions
 
 1. Deploy the application to Heroku and [set the config variables](https://devcenter.heroku.com/articles/config-vars) to those in `.env.example`, replacing the placeholders with your own variables.
 
@@ -49,4 +49,4 @@ If no customer is associated with the order, it will simply log "no customer ass
 
 3. This step will allow you to receive order update requests via sms, and respond to them with an up to date order status. You should point your chosen Twilio number to the deployed url + `/sms` for when the number receives an sms.
 
-![](https://media.giphy.com/media/3o7TKy1qgGdbbMalcQ/giphy.gif)
+![](https://media.giphy.com/media/3ohhwGpIOhPtQ5kALu/giphy.gif)
