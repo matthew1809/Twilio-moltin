@@ -20,8 +20,8 @@
 
 1. If using this on your moltin store, you’ll need to make sure you have two flow fields created on your customers entity. If you’ve never used flows before, you can learn more in [this blog post](https://moltin.com/blog/2017/06/power-of-flows/s). The two fields should be:
 
-`promo_sent` - boolean type, not required, default `false`.
-`phone_number` - string type, not required, default `null`.
+- `promo_sent` - boolean type, not required, default `false`.
+- `phone_number` - string type, not required, default `null`.
 
 2. If you are using the promotions functionality you must provide the promotion code as an env var (covered in step 3). To create a promo code, you need to create a moltin promotion, and then attach a promotion code to that promotion. The following documents will be useful to you:
 
