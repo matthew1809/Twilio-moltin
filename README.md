@@ -6,17 +6,21 @@
 
 [Get Moltin API keys](https://dashboard.moltin.com/signup)
 
-The purpose of this project is to allow your customers to:
+The purpose of this project is to:
 
-1. Automatically receive an sms notification when they create and successfully pay for a moltin order
+1. Automatically send an sms notification to your customer when they create and successfully pay for a moltin order
 
-2. Request a status update on their moltin order by texting "status", followed by a space, followed by the order ID
+2. Let customers request a status update on their moltin order by texting "status", followed by a space, followed by the order ID.
+
+3. Automatically send a promo code to customers who have only made one paid order in your store, and that order was made more than two weeks ago.
 
 ---
 
 In order to use this repo, you'll need to follow three steps:
 
-1. Deploy the application to Heroku, providing your Twilio credentials, your twilio from number and your moltin client secret.
+1. Deploy the application to Heroku, providing your Twilio credentials, your twilio from number and your moltin credentials. 
+
+*You will also need to specify whether or not to enable the promotions functionality via env variable. To enable it, set the variable called `promotions_enabled` to "yes"*
 
 2. This step will allow you to send the order notifications, it tells moltin to ping our app when an order is paid for. You should create a moltin webhook pointing to the deployed url with /orders on the end i.e. `http://5e082d80.ngrok.io/orders`.
 

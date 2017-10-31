@@ -12,23 +12,24 @@ const schedule = require('node-schedule');
 const moltin = require('./moltin.js');
 const twilio = require('./twilio.js');
 
+// check that the app is set to have this functionality enabled
+if(process.env.promotions_enabled === "yes") {
+
+	// schedule our job to run every minute
+	var event = schedule.scheduleJob("*/1 * * * *", function() {
+		return getCustomers();
+	});
+
+// if the app is not set to have the promotions functionality enabled	
+} else {
+	console.log("promotions not enabled");
+};
+
 // initialise our date variable
 var d = new Date();
 
 // set our date to fourteen days ago
 d.setDate(d.getDate()-14);
-
-// use schedule to declare a rule for one minute past every hour
-var rule = new schedule.RecurrenceRule();
-rule.minute = 01;
-
-// schedule our job to run using the rule parameters declared above
-var j = schedule.scheduleJob(rule, function(){
-
-  // trigger the get customers function
-  return getCustomers();
-});
-
 
 // get all our customers from our moltin store
 function getCustomers() {
@@ -52,7 +53,7 @@ function getCustomers() {
 };
 
 
-// check that the customer has 
+// check that the customer has correct number of orders
 function CheckCustomerOrders(customer) {
 
 	// there may not be any orders associated with a customer so we need a try catch
@@ -120,7 +121,8 @@ function checkCustomerPromotionFlag(customer) {
 		// return the function to send a promotion code to the customer
 		return twilio.createPromotionMessage(to, name, "MY_PROMO");
 
-		// TODO call the adjustCustomerPromotionFlag if the twilio function succeeds
+		// TODO call the adjustCustomerPromotionFlag only if the twilio function succeeds
+		// return adjustCustomerPromotionFlag(customer, true);
 	}
 
 	// if the promotion has already been sent to the user
@@ -130,6 +132,7 @@ function checkCustomerPromotionFlag(customer) {
 
 };
 
+// takes a customer, and a boolean state, changes the promo_sent flag on that customer to the given state
 function adjustCustomerPromotionFlag(customer, state) {
 
 	// create the body for our customer update call

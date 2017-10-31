@@ -25,7 +25,8 @@ exports.createOrderMessage = function(to, name, total, id) {
 		function(err, message) { 
 			 console.log(message.sid);
 			 console.log(err);
-		});
+		}
+	);
 };
 
 // function ro respond with an sms order update given the order in question
