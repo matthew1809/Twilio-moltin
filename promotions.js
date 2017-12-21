@@ -25,12 +25,6 @@ if(process.env.promotions_enabled === "yes") {
 	console.log("promotions not enabled");
 };
 
-// initialise our date variable
-var d = new Date();
-
-// set our date to fourteen days ago
-d.setDate(d.getDate()-14);
-
 // get all our customers from our moltin store
 function getCustomers() {
 
@@ -92,6 +86,12 @@ function CheckCustomerOrders(customer) {
 
 
 function CheckOrderDate(order, customer) {
+
+	// initialise our date variable
+	let d = new Date();
+
+	// set our date to fourteen days ago
+	d.setDate(d.getDate()-14);
 
 	// grab the date the order was created
 	let order_date = new Date(order.meta.timestamps.created_at);
