@@ -17,15 +17,17 @@ if(process.env.promotions_enabled === "yes") {
 
 	// schedule our job to run every minute
 	var event = schedule.scheduleJob("*/1 * * * *", function() {
+		
+		// trigger our function every time the job is run
 		return getCustomers();
 	});
 
-// if the app is not set to have the promotions functionality enabled	
+// the app is not set to have the promotions functionality enabled	
 } else {
 	console.log("promotions not enabled");
 };
 
-// get all our customers from our moltin store
+// gets all our customers from our moltin store
 function getCustomers() {
 
 	// get our customers
@@ -124,8 +126,8 @@ function checkCustomerPromotionFlag(customer) {
 		// return the function to send a promotion code to the customer
 		return twilio.createPromotionMessage(to, name, process.env.promo_code);
 
-		// TODO call the adjustCustomerPromotionFlag only if the twilio function succeeds
-		// return adjustCustomerPromotionFlag(customer, true, );
+		//TODO: call the adjustCustomerPromotionFlag only if the twilio function succeeds
+		// return adjustCustomerPromotionFlag(customer, true);
 
 		}
 
@@ -133,7 +135,6 @@ function checkCustomerPromotionFlag(customer) {
 		catch(e) {
 			return false;
 		};
-
 	}
 
 	// if the promotion has already been sent to the user

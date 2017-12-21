@@ -30,7 +30,7 @@
 
 3. Deploy the application to Heroku and [set the config variables](https://devcenter.heroku.com/articles/config-vars) to those in `.env.example`, replacing the placeholders with your own variables.
 
-4. This step will allow you to send the order notifications, it tells moltin to ping our app when an order is paid for. You should create a moltin webhook pointing to the deployed url with /orders on the end i.e. `http://5e082d80.ngrok.io/orders`.
+4. This step will allow you to send the order notifications, it tells moltin to let our app know when a transaction for an order is updated. You should create a moltin webhook pointing to the deployed url with `/orders` on the end i.e. `http://5e082d80.ngrok.io/orders`.
 
 You can create a moltin webhook like so:
 
