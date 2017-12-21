@@ -6,8 +6,8 @@ var exports = module.exports = {};
 //require and initialise the moltin SDK
 const MoltinGateway = require('@moltin/sdk').gateway;
 const Moltin = MoltinGateway({
-  client_id: 'j6hSilXRQfxKohTndUuVrErLcSJWP15P347L6Im0M4',
-  client_secret: process.env.client_secret,
+  client_id: process.env.CLIENT_ID,
+  client_secret: process.env.CLIENT_SECRET,
 });
 
 // function to get a moltin order given an order ID
