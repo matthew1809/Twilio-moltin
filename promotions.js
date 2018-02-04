@@ -13,7 +13,7 @@ const moltin = require('./moltin.js');
 const twilio = require('./twilio.js');
 
 // check that the app is set to have this functionality enabled
-if(process.env.promotions_enabled === "yes") {
+if(process.env.promotions_enabled === true) {
 
 	// schedule our job to run every minute
 	var event = schedule.scheduleJob("*/1 * * * *", function() {

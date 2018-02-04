@@ -25,8 +25,8 @@
 
 2. If you are using the promotions functionality you must provide the promotion code as an env var (covered in step 3). To create a promo code, you need to create a moltin promotion, and then attach a promotion code to that promotion. The following documents will be useful to you:
 
-- [Reference for creating a promotion](https://moltin.api-docs.io/v2/promotions/create-promotion)
-- [Reference for creating a promo code](https://moltin.api-docs.io/v2/promotions/create-promotion-code)
+- [Reference for creating a promotion](https://docs.moltin.com/#create-a-promotion)
+- [Reference for creating a promo code](https://docs.moltin.com/#create-promotion-codes)
 
 3. Deploy the application to Heroku and [set the config variables](https://devcenter.heroku.com/articles/config-vars) to those in `.env.example`, replacing the placeholders with your own variables.
 
