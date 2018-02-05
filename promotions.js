@@ -8,28 +8,17 @@
 // 7. Set promo_sent flag on the customer to true
 
 // pull in our modules
-const schedule = require('node-schedule');
 const moltin = require('./moltin.js');
 const twilio = require('./twilio.js');
+const yn = require('yn');
 
-// check that the app is set to have this functionality enabled
-if(process.env.promotions_enabled === true) {
-
-	// schedule our job to run every minute
-	var event = schedule.scheduleJob("*/1 * * * *", function() {
-		
-		// trigger our function every time the job is run
-		return getCustomers();
-	});
-
-// the app is not set to have the promotions functionality enabled	
-} else {
-	console.log("promotions not enabled");
-};
+var exports = module.exports = {};
+require('dotenv').config();
 
 // gets all our customers from our moltin store
-function getCustomers() {
+exports.getCustomers = function() {
 
+	console.log("getCustomers running");
 	// get our customers
 	moltin.getCustomers().then((customers) => {
 
@@ -52,38 +41,49 @@ function getCustomers() {
 // check that the customer has correct number of orders
 function CheckCustomerOrders(customer) {
 
-	// there may not be any orders associated with a customer so we need a try catch
-	try {
+	let email = customer.email;
 
-		// grab our associated orders
-		let orderIDs = customer.data.relationships.orders;
+	// filters moltin orders by the customer email
+	moltin.getOrdersByEmail(email).then((orders) => {
 
-		// if the customer has less than two orders (if the try succeeds we know they have more than one)
-		if(orderIDs.length < 2) {
+		console.log(orders.meta.results.total);
 
-			// go get the moltin order
-			moltin.getOrder(orderIDs[0]).then((order) => {
+		// there may not be any orders associated with a customer so we need a try catch
+		try {
 
-				// go check the date on the order
-				return CheckOrderDate(order, customer);
-			})
+			// if the customer has less than two orders (if the try succeeds we know they have more than one)
+			if(orders.meta.results.total < 50 && orders.meta.results.total > 0) {
 
-			// if there is an error fetching the moltin order
-			.catch((e) => {
-				console.log(e);
-			});
-		} 
+				console.log("customer has less than 50 orders but more than 0");
+				console.log(orders.meta.results.total);
+				
+				// go get the moltin order
+				moltin.getOrder(orders.data[0].id).then((order) => {
 
-		// if the customer has two or more orders
-		else {
+					// go check the date on the order
+					return CheckOrderDate(order, customer);
+				})
+
+				// if there is an error fetching the moltin order
+				.catch((e) => {
+					console.log(e);
+				});
+			} 
+
+			// if the customer has two or more orders
+			else {
+				console.log('customer has more than 5 orders')
+				return false;
+			};
+
+		// if the customer has no orders
+		} catch (e) {
+			console.log(e);
 			return false;
 		};
 
-	// if the customer has no orders
-	} catch (e) {
-		console.log(e);
-		return false;
-	};
+	})
+
 };
 
 
@@ -95,17 +95,23 @@ function CheckOrderDate(order, customer) {
 	// set our date to fourteen days ago
 	d.setDate(d.getDate()-14);
 
-	// grab the date the order was created
-	let order_date = new Date(order.meta.timestamps.created_at);
+	console.log(d);
+
+	//grab the date the order was created
+	let order_date = new Date(order.data.meta.timestamps.created_at);
 
 	// if the order is more that 14 days old & paid for
-	if(order_date > d && order.data.payment === "paid") {
+	if(order_date < d && order.data.payment === "paid") {
+
+		console.log("latest order is more than 14 days old");
+
 		// go make sure we haven't already sent the promotion
 		return checkCustomerPromotionFlag(customer); 
 	}
 
 	// if the order is less than 14 days old or is unpaid
 	else {
+		console.log("order is less than 14 days old");
 		return false;
 	}
 };
@@ -115,20 +121,24 @@ function CheckOrderDate(order, customer) {
 function checkCustomerPromotionFlag(customer) {
 
 	// if the flag on the customer account is false
-	if(customer.data.promo_sent === false) {
+	if(yn(customer.promo_sent) === false) {
 
+		console.log("customer doesn't already have promo sent");
 		// just in case the customer doesn't have a phone number, we use a try catch
 		try {
 
-		let name = customer.data.name;
-		let to = customer.data.phone_number;
+		let to = customer.phone_number;
+		let name = customer.name;
 
 		// return the function to send a promotion code to the customer
-		return twilio.createPromotionMessage(to, name, process.env.promo_code);
-
-		//TODO: call the adjustCustomerPromotionFlag only if the twilio function succeeds
-		// return adjustCustomerPromotionFlag(customer, true);
-
+		 if(twilio.createPromotionMessage(to, name, process.env.promo_code) === false) {
+		 	console.log("there has been an error sending the promo code");
+		 } else {
+		 	console.log("the promotion has sent successfully");
+		 	// set the flag on the customer to true so the promo is not sent again
+		 	return adjustCustomerPromotionFlag(customer, 'true');
+		 };
+		 
 		}
 
 		// if an error is thrown during our try block
@@ -145,18 +155,18 @@ function checkCustomerPromotionFlag(customer) {
 };
 
 // takes a customer, and a boolean state, changes the promo_sent flag on that customer to the given state
-function adjustCustomerPromotionFlag(customer, state) {
+function adjustCustomerPromotionFlag(customerID, state) {
 
 	// create the body for our customer update call
 	let body = {
-		"data": {
 			"type": "customer",
 			"promo_sent": state
-		}
 	};
 
 	// go update our moltin customer
-	moltin.updateCustomer(customer.data.id, body).then((res) => {
+	moltin.updateCustomer(customerID, body)
+
+	.then((res) => {
 		console.log(res);
 	})
 
