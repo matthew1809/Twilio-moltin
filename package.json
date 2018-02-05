@@ -10,11 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@moltin/sdk": "^2.8.0",
+    "@moltin/sdk": "^3.3.0",
     "body-parser": "^1.18.2",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "node-schedule": "^1.2.5",
-    "twilio": "^3.8.0"
+    "twilio": "^3.8.0",
+    "yn": "^2.0.0"
   }
 }
