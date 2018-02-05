@@ -1,14 +1,19 @@
+require('dotenv').config()
+
 // require Express and creare an express app
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
+const yn = require('yn');
+const schedule = require('node-schedule');
 
 // require and use the middleware parser for express
 const bodyParser = require('body-parser'); 
 const jsonParser = bodyParser.json();
-const urlParser = bodyParser.urlencoded();
+const urlParser = bodyParser.urlencoded({ extended: true });
 
 // require our moltin utils
 const moltin = require("./moltin.js");
+const promotionsHelper = require("./promotions.js");
 
 // require our twilio utils
 const twilio = require("./twilio.js");
@@ -16,8 +21,8 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const twiml = new MessagingResponse();
 
 // parse application/json
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 // runs when the '/orders' endpoint is POSTed to
 app.post('/orders', jsonParser, function (req, res) {
@@ -102,5 +107,22 @@ app.listen(port, function () {
   console.log('Twilio - Moltin app listening on port ' + port);
 });
 
+
+// check that the app is set to have this functionality enabled
+if(yn(process.env.promotions_enabled) === true) {
+  
+  console.log("promotions enabled");
+
+  // schedule our job to run every minute
+  var event = schedule.scheduleJob("*/1 * * * *", function() {
+    console.log("job running");
+    // trigger our function every time the job is run
+    return promotionsHelper.getCustomers();
+  });
+
+// the app is not set to have the promotions functionality enabled  
+} else {
+  console.log("promotions not enabled");
+};
 
 
