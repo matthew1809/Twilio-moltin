@@ -38,16 +38,22 @@ exports.respond = function(order) {
 
 exports.createPromotionMessage = function(to, name, code) {
 
+	console.log("createPromotionMessage running");
+
+	try {
 	// create our sms message using the function inputs
 	client.messages.create(
 		{
-			to: to, 
+			to: '+447538469388', 
 			from: process.env.FROM_NUMBER || "+442071839811",
 			body: "Hey " + name + ", come back and get X off your next order with the promo code " + code
 		},
-		function(err, message) {
-			 console.log(message.sid);
-			 console.log(err);
+		function(message) {
+			 return true;
 		});
+	} catch(e) {
+		console.log(e);
+		return false;
+	};
 
 };
